@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- FORM VIEW -->
+    <record id="view_stock_receive_form" model="ir.ui.view">
+        <field name="name">medical.stock.receive.form</field>
+        <field name="model">medical.stock.receive</field>
+        <field name="arch" type="xml">
+            <form string="Receive Stock">
+                <header>
+                    <button name="action_receive" string="Confirm &amp; Add to Inventory"
+                            type="object" class="btn-primary"
+                            invisible="state != 'draft'"
+                            confirm="This will add all items to your inventory. Are you sure?"/>
+                    <button name="action_cancel" string="Cancel"
+                            type="object"
+                            invisible="state in ['done', 'cancelled']"/>
+                    <button name="action_reset_draft" string="Reset to Draft"
+                            type="object"
+                            invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Receipt Details">
+                            <field name="date_receive" readonly="state != 'draft'"/>
+                            <field name="received_by" readonly="state != 'draft'"/>
+                            <field name="destination_location_id" readonly="state != 'draft'"/>
+                            <field name="supplier" readonly="state != 'draft'"/>
+                        </group>
+                        <group string="Status">
+                            <field name="stock_picking_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Items to Receive">
+                            <field name="line_ids" readonly="state != 'draft'">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="product_uom_id"/>
+                                    <field name="lot_id" optional="show"/>
+                                    <field name="expiry_date" optional="show"/>
+                                    <field name="notes" optional="show"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes" readonly="state != 'draft'"
+                                   placeholder="Supplier info, delivery note number, etc."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- LIST VIEW -->
+    <record id="view_stock_receive_list" model="ir.ui.view">
+        <field name="name">medical.stock.receive.list</field>
+        <field name="model">medical.stock.receive</field>
+        <field name="arch" type="xml">
+            <list string="Stock Receipts"
+                  decoration-success="state == 'done'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="date_receive"/>
+                <field name="received_by"/>
+                <field name="destination_location_id"/>
+                <field name="supplier"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'done'"
+                       decoration-danger="state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_stock_receive" model="ir.actions.act_window">
+        <field name="name">Receive Stock</field>
+        <field name="res_model">medical.stock.receive</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Receive your first stock delivery
+            </p>
+            <p>
+                Use this screen to add new items into your inventory
+                without going to the standard Inventory module.
+            </p>
+        </field>
+    </record>
+
+</odoo>
