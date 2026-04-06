@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Medical Center parent location -->
+        <record id="location_medical_center" model="stock.location">
+            <field name="name">Medical Center</field>
+            <field name="usage">view</field>
+            <field name="location_id" ref="stock.stock_location_locations"/>
+        </record>
+        <!-- Main medical store / warehouse -->
+        <record id="location_main_store" model="stock.location">
+            <field name="name">Main Medical Store</field>
+            <field name="usage">internal</field>
+            <field name="location_id" ref="location_medical_center"/>
+        </record>
+        <!-- Clinic departments -->
+        <record id="location_clinic_1" model="stock.location">
+            <field name="name">Clinic 1</field>
+            <field name="usage">internal</field>
+            <field name="location_id" ref="location_medical_center"/>
+        </record>
+        <record id="location_clinic_2" model="stock.location">
+            <field name="name">Clinic 2</field>
+            <field name="usage">internal</field>
+            <field name="location_id" ref="location_medical_center"/>
+        </record>
+        <record id="location_clinic_3" model="stock.location">
+            <field name="name">Clinic 3</field>
+            <field name="usage">internal</field>
+            <field name="location_id" ref="location_medical_center"/>
+        </record>
+        <record id="location_emergency" model="stock.location">
+            <field name="name">Emergency Department</field>
+            <field name="usage">internal</field>
+            <field name="location_id" ref="location_medical_center"/>
+        </record>
+        <record id="location_pharmacy" model="stock.location">
+            <field name="name">Pharmacy</field>
+            <field name="usage">internal</field>
+            <field name="location_id" ref="location_medical_center"/>
+        </record>
+    </data>
+</odoo>
