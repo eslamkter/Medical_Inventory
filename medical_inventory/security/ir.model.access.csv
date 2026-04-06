@@ -1,7 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_consumption_request_user,Consumption Request User,model_medical_consumption_request,base.group_user,1,1,1,0
-access_consumption_request_manager,Consumption Request Manager,model_medical_consumption_request,base.group_system,1,1,1,1
-access_consumption_request_line_user,Consumption Request Line User,model_medical_consumption_request_line,base.group_user,1,1,1,1
-access_stock_alert_user,Stock Alert User,model_medical_stock_alert,base.group_user,1,0,0,0
-access_stock_alert_manager,Stock Alert Manager,model_medical_stock_alert,base.group_system,1,1,1,1
-access_consumption_approve_wizard,Consumption Approve Wizard,model_medical_consumption_approve_wizard,base.group_user,1,1,1,1
