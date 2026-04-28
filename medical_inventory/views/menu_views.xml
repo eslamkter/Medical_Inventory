@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_medical_inventory_root" name="المخزون الطبي" sequence="50"/>
+
+    <menuitem id="menu_medical_dashboard" name="لوحة التحكم"
+              parent="menu_medical_inventory_root"
+              action="action_medical_dashboard" sequence="1"/>
+
+    <menuitem id="menu_stock_overview" name="المخزون الحالي"
+              parent="menu_medical_inventory_root"
+              action="action_medical_stock_view" sequence="5"/>
+
+    <menuitem id="menu_medical_products" name="المنتجات"
+              parent="menu_medical_inventory_root"
+              action="action_medical_products" sequence="8"/>
+
+    <menuitem id="menu_stock_receive" name="استلام المخزون"
+              parent="menu_medical_inventory_root"
+              action="action_stock_receive" sequence="10"/>
+
+    <menuitem id="menu_transfer_requests" name="طلبات النقل"
+              parent="menu_medical_inventory_root"
+              action="action_transfer_request" sequence="20"/>
+
+    <menuitem id="menu_consumption_requests" name="تقارير الاستهلاك"
+              parent="menu_medical_inventory_root"
+              action="action_consumption_request" sequence="25"/>
+
+    <!-- حسابات الموردين -->
+    <menuitem id="menu_vendor_accounts_root" name="حسابات الموردين"
+              parent="menu_medical_inventory_root" sequence="35"/>
+
+    <menuitem id="menu_vendor_accounts" name="كشف حساب الموردين"
+              parent="menu_vendor_accounts_root"
+              action="action_vendor_accounts" sequence="10"/>
+
+    <menuitem id="menu_vendor_payments" name="الدفعات"
+              parent="menu_vendor_accounts_root"
+              action="action_vendor_payments" sequence="20"/>
+
+    <!-- التحليلات -->
+    <menuitem id="menu_medical_analytics" name="التحليلات"
+              parent="menu_medical_inventory_root" sequence="40"/>
+
+    <menuitem id="menu_stock_card" name="كارتة الصنف"
+              parent="menu_medical_analytics"
+              action="action_stock_card" sequence="5"/>
+
+    <menuitem id="menu_purchase_analytics" name="تحليلات المشتريات"
+              parent="menu_medical_analytics"
+              action="action_receive_analytics" sequence="10"/>
+
+    <menuitem id="menu_consumption_analytics" name="تحليلات الاستهلاك"
+              parent="menu_medical_analytics"
+              action="action_consumption_analytics" sequence="20"/>
+
+    <menuitem id="menu_expiry_monitor" name="مراقبة انتهاء الصلاحية"
+              parent="menu_medical_analytics"
+              action="action_expiry_monitor" sequence="30"/>
+
+    <menuitem id="menu_generate_report" name="إنشاء تقرير (Excel/PDF)"
+              parent="menu_medical_analytics"
+              action="action_analytics_report_wizard" sequence="40"/>
+
+    <!-- الإعدادات -->
+    <menuitem id="menu_medical_config" name="الإعدادات"
+              parent="menu_medical_inventory_root" sequence="100"/>
+
+    <menuitem id="menu_medical_locations" name="العيادات والأقسام"
+              parent="menu_medical_config"
+              action="action_medical_locations" sequence="10"/>
+
+    <menuitem id="menu_medical_vendors" name="الموردون"
+              parent="menu_medical_config"
+              action="action_medical_vendors" sequence="20"/>
+</odoo>

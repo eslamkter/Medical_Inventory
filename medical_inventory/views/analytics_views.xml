@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- تحليلات المشتريات -->
+    <record id="view_receive_graph" model="ir.ui.view">
+        <field name="name">medical.receive.line.graph</field>
+        <field name="model">medical.stock.receive.line</field>
+        <field name="arch" type="xml">
+            <graph string="الإنفاق حسب المنتج" type="bar" sample="1">
+                <field name="product_id" type="row"/>
+                <field name="subtotal" type="measure" string="إجمالي الإنفاق"/>
+                <field name="quantity" type="measure" string="الكمية"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_receive_pivot" model="ir.ui.view">
+        <field name="name">medical.receive.line.pivot</field>
+        <field name="model">medical.stock.receive.line</field>
+        <field name="arch" type="xml">
+            <pivot string="تحليلات المشتريات" sample="1" display_quantity="true">
+                <field name="product_id" type="row" string="المنتج"/>
+                <field name="quantity" type="measure" string="الكمية المشتراة"/>
+                <field name="unit_price" type="measure" string="متوسط سعر الوحدة"/>
+                <field name="subtotal" type="measure" string="إجمالي الإنفاق"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_receive_line_list" model="ir.ui.view">
+        <field name="name">medical.receive.line.list</field>
+        <field name="model">medical.stock.receive.line</field>
+        <field name="arch" type="xml">
+            <list string="سجل المشتريات">
+                <field name="receive_id" string="الاستلام"/>
+                <field name="product_id" string="المنتج"/>
+                <field name="quantity" sum="إجمالي الكمية"/>
+                <field name="product_uom_id" string="الوحدة"/>
+                <field name="unit_price" string="سعر الوحدة" avg="متوسط السعر"/>
+                <field name="subtotal" string="الإجمالي" sum="المجموع الكلي"/>
+                <field name="expiry_date" optional="show" string="تاريخ الانتهاء"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_receive_line_search" model="ir.ui.view">
+        <field name="name">medical.receive.line.search</field>
+        <field name="model">medical.stock.receive.line</field>
+        <field name="arch" type="xml">
+            <search string="بحث في المشتريات">
+                <field name="product_id" string="المنتج"/>
+                <field name="receive_id" string="الاستلام"/>
+                <filter string="هذا الشهر" name="this_month"
+                        domain="[('receive_id.date_receive','&gt;=',(context_today()).strftime('%Y-%m-01'))]"/>
+                <filter string="الشهر الماضي" name="last_month"
+                        domain="[('receive_id.date_receive','&gt;=',(context_today()-relativedelta(months=1)).strftime('%Y-%m-01')),
+                                  ('receive_id.date_receive','&lt;',(context_today()).strftime('%Y-%m-01'))]"/>
+                <filter string="هذا العام" name="this_year"
+                        domain="[('receive_id.date_receive','&gt;=',(context_today()).strftime('%Y-01-01'))]"/>
+                <filter string="آخر 30 يوم" name="last_30"
+                        domain="[('receive_id.date_receive','&gt;=',(context_today()-datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter string="حسب المنتج" name="group_product" context="{'group_by': 'product_id'}"/>
+                <filter string="حسب الشهر" name="group_month" context="{'group_by': 'date_receive:month'}"/>
+                <filter string="حسب الموقع" name="group_location" context="{'group_by': 'destination_location_id'}"/>
+                <filter string="حسب المورد" name="group_vendor" context="{'group_by': 'vendor_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_receive_analytics" model="ir.actions.act_window">
+        <field name="name">تحليلات المشتريات</field>
+        <field name="res_model">medical.stock.receive.line</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="search_view_id" ref="view_receive_line_search"/>
+        <field name="domain">[('receive_id.state', '=', 'done')]</field>
+        <field name="context">{'search_default_group_product': 1}</field>
+    </record>
+
+    <!-- تحليلات الاستهلاك -->
+    <record id="view_consumption_line_graph" model="ir.ui.view">
+        <field name="name">medical.consumption.line.graph</field>
+        <field name="model">medical.consumption.request.line</field>
+        <field name="arch" type="xml">
+            <graph string="الاستهلاك حسب المنتج" type="bar" sample="1">
+                <field name="product_id" type="row"/>
+                <field name="quantity" type="measure" string="الوحدات المستهلكة"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_consumption_line_pivot" model="ir.ui.view">
+        <field name="name">medical.consumption.line.pivot</field>
+        <field name="model">medical.consumption.request.line</field>
+        <field name="arch" type="xml">
+            <pivot string="تحليلات الاستهلاك" sample="1" display_quantity="true">
+                <field name="product_id" type="row" string="المنتج"/>
+                <field name="quantity" type="measure" string="الكمية المستهلكة"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_consumption_line_list" model="ir.ui.view">
+        <field name="name">medical.consumption.line.list</field>
+        <field name="model">medical.consumption.request.line</field>
+        <field name="arch" type="xml">
+            <list string="سجل الاستهلاك">
+                <field name="request_id" string="الطلب"/>
+                <field name="product_id" string="المنتج"/>
+                <field name="quantity" sum="إجمالي الكمية" string="الكمية"/>
+                <field name="product_uom_id" string="الوحدة"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_consumption_line_search" model="ir.ui.view">
+        <field name="name">medical.consumption.line.search</field>
+        <field name="model">medical.consumption.request.line</field>
+        <field name="arch" type="xml">
+            <search string="بحث في الاستهلاك">
+                <field name="product_id" string="المنتج"/>
+                <field name="request_id" string="الطلب"/>
+                <filter string="حسب المنتج" name="group_product" context="{'group_by': 'product_id'}"/>
+                <filter string="حسب العيادة" name="group_clinic" context="{'group_by': 'department_location_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_consumption_analytics" model="ir.actions.act_window">
+        <field name="name">تحليلات الاستهلاك</field>
+        <field name="res_model">medical.consumption.request.line</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="search_view_id" ref="view_consumption_line_search"/>
+        <field name="domain">[('request_id.state', '=', 'done')]</field>
+        <field name="context">{'search_default_group_product': 1}</field>
+    </record>
+
+    <!-- مراقبة انتهاء الصلاحية -->
+    <record id="view_expiry_list" model="ir.ui.view">
+        <field name="name">medical.expiry.list</field>
+        <field name="model">medical.stock.receive.line</field>
+        <field name="arch" type="xml">
+            <list string="مراقبة انتهاء الصلاحية"
+                  decoration-danger="expiry_date and expiry_date &lt;= current_date"
+                  decoration-warning="expiry_date and expiry_date &gt; current_date">
+                <field name="product_id" string="المنتج"/>
+                <field name="quantity" string="الكمية"/>
+                <field name="product_uom_id" string="الوحدة"/>
+                <field name="lot_id" optional="show" string="رقم الدفعة"/>
+                <field name="expiry_date" string="تاريخ الانتهاء"/>
+                <field name="receive_id" string="الاستلام"/>
+                <field name="destination_location_id" string="الموقع" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_expiry_search" model="ir.ui.view">
+        <field name="name">medical.expiry.search</field>
+        <field name="model">medical.stock.receive.line</field>
+        <field name="arch" type="xml">
+            <search string="بحث في انتهاء الصلاحية">
+                <field name="product_id" string="المنتج"/>
+                <filter string="منتهي الصلاحية" name="expired"
+                        domain="[('expiry_date', '!=', False), ('expiry_date', '&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="ينتهي خلال 30 يوم" name="expiring_soon"
+                        domain="[('expiry_date', '!=', False), ('expiry_date', '&gt;', context_today().strftime('%Y-%m-%d')), ('expiry_date', '&lt;=', (context_today()+datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <filter string="حسب المنتج" name="group_product" context="{'group_by': 'product_id'}"/>
+                <filter string="حسب الموقع" name="group_location" context="{'group_by': 'destination_location_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_expiry_monitor" model="ir.actions.act_window">
+        <field name="name">مراقبة انتهاء الصلاحية</field>
+        <field name="res_model">medical.stock.receive.line</field>
+        <field name="view_mode">list</field>
+        <field name="search_view_id" ref="view_expiry_search"/>
+        <field name="domain">[('expiry_date', '!=', False), ('receive_id.state', '=', 'done')]</field>
+        <field name="context">{'search_default_expiring_soon': 1}</field>
+    </record>
+
+</odoo>
