@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <!-- Assets are declared in __manifest__.py for Odoo 17+ / 19 -->
-    <!-- Do NOT add asset templates here — it causes double-loading and dashboard failure -->
-</odoo>
