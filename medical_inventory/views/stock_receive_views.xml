@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_medical_vendor_list" model="ir.ui.view">
+        <field name="name">medical.vendor.list</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <list string="الموردون">
+                <field name="name" string="اسم المورد"/>
+                <field name="phone" optional="show"/>
+                <field name="email" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_medical_vendors" model="ir.actions.act_window">
+        <field name="name">الموردون</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('is_company', '=', True)]</field>
+        <field name="context">{'default_is_company': True}</field>
+    </record>
+
+    <record id="view_stock_receive_form" model="ir.ui.view">
+        <field name="name">medical.stock.receive.form</field>
+        <field name="model">medical.stock.receive</field>
+        <field name="arch" type="xml">
+            <form string="استلام المخزون">
+                <header>
+                    <button name="action_receive" string="تأكيد وإضافة إلى المخزون"
+                            type="object" class="btn-primary"
+                            invisible="state != 'draft'"
+                            confirm="سيتم إضافة جميع العناصر إلى المخزون. هل أنت متأكد؟"/>
+                    <button name="action_print_receipt" string="🖨️ طباعة الإيصال"
+                            type="object" invisible="state != 'done'"/>
+                    <button name="action_cancel" string="إلغاء" type="object"
+                            invisible="state in ['done', 'cancelled']"/>
+                    <button name="action_reset_draft" string="إعادة إلى المسودة" type="object"
+                            invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_vendor_account" type="object"
+                                class="oe_stat_button" icon="fa-bank"
+                                invisible="not vendor_id or state != 'done'">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="vendor_new_balance" widget="float"
+                                           options="{'digits': [10,2]}"/>
+                                </span>
+                                <span class="o_stat_text">رصيد المورد</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="تفاصيل الاستلام">
+                            <field name="date_receive" string="التاريخ" readonly="state != 'draft'"/>
+                            <field name="received_by" string="استلم بواسطة" readonly="state != 'draft'"/>
+                            <field name="destination_location_id" string="تخزين في" readonly="state != 'draft'"/>
+                        </group>
+                        <group string="معلومات المورد">
+                            <field name="vendor_id" string="المورد" readonly="state != 'draft'"/>
+                            <field name="vendor_invoice_ref" string="مرجع الفاتورة" readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+
+                    <!-- رصيد المورد - يظهر لما تختار المورد -->
+                    <div invisible="not vendor_id"
+                         style="margin:12px 0; padding:12px; background:#f0f9ff; border:1px solid #bae6fd; border-radius:8px;">
+                        <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:center;">
+                            <div>
+                                <span style="color:#64748b; font-size:13px;">الرصيد القديم للمورد: </span>
+                                <strong style="color:#0369a1; font-size:16px;">
+                                    <field name="vendor_old_balance" widget="float"
+                                           options="{'digits': [10,2]}" nolabel="1"/> EGP
+                                </strong>
+                            </div>
+                            <div style="font-size:20px; color:#94a3b8;">+</div>
+                            <div>
+                                <span style="color:#64748b; font-size:13px;">قيمة هذا الاستلام: </span>
+                                <strong style="color:#1565c0; font-size:16px;">
+                                    <field name="total_value" widget="float"
+                                           options="{'digits': [10,2]}" nolabel="1"/> EGP
+                                </strong>
+                            </div>
+                            <div style="font-size:20px; color:#94a3b8;">=</div>
+                            <div>
+                                <span style="color:#64748b; font-size:13px;">الرصيد الجديد: </span>
+                                <strong style="color:#c2410c; font-size:18px;">
+                                    <field name="vendor_new_balance" widget="float"
+                                           options="{'digits': [10,2]}" nolabel="1"/> EGP
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- قسم الدفع -->
+                    <group string="💰 معلومات الدفع" invisible="not vendor_id">
+                        <group>
+                            <field name="total_value" string="إجمالي الفاتورة" readonly="1"
+                                   widget="monetary"/>
+                            <field name="amount_paid" string="المبلغ المدفوع الآن"
+                                   readonly="state != 'draft'" widget="monetary"/>
+                            <field name="amount_due" string="المبلغ المتبقي" readonly="1"
+                                   widget="monetary"/>
+                        </group>
+                        <group>
+                            <field name="payment_state" string="حالة الدفع" readonly="1"
+                                   widget="badge"
+                                   decoration-success="payment_state == 'paid'"
+                                   decoration-warning="payment_state == 'partial'"
+                                   decoration-danger="payment_state == 'unpaid'"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="العناصر المستلمة">
+                            <field name="line_ids" readonly="state != 'draft'">
+                                <list editable="bottom">
+                                    <field name="product_id" string="المنتج"/>
+                                    <field name="quantity" string="الكمية"/>
+                                    <field name="product_uom_id" string="الوحدة"/>
+                                    <field name="unit_price" string="سعر الوحدة"/>
+                                    <field name="subtotal" string="المجموع الجزئي"
+                                           readonly="1" sum="الإجمالي"/>
+                                    <field name="lot_id" optional="show" string="رقم الدفعة"/>
+                                    <field name="expiry_date" optional="show" string="تاريخ الانتهاء"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="total_value" string="المجموع الكلي"
+                                       widget="monetary"
+                                       style="font-size: 1.3em; font-weight: bold;"/>
+                            </group>
+                            <div class="clearfix"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_stock_receive_list" model="ir.ui.view">
+        <field name="name">medical.stock.receive.list</field>
+        <field name="model">medical.stock.receive</field>
+        <field name="arch" type="xml">
+            <list string="استلامات المخزون"
+                  decoration-success="payment_state == 'paid'"
+                  decoration-warning="payment_state == 'partial'"
+                  decoration-danger="payment_state == 'unpaid' and state == 'done'">
+                <field name="name" string="المرجع"/>
+                <field name="date_receive" string="التاريخ"/>
+                <field name="vendor_id" string="المورد"/>
+                <field name="total_value" string="إجمالي الفاتورة" sum="الإجمالي"/>
+                <field name="amount_paid" string="المدفوع" sum="إجمالي المدفوع"/>
+                <field name="amount_due" string="المتبقي" sum="إجمالي المتبقي"/>
+                <field name="payment_state" string="حالة الدفع" widget="badge"
+                       decoration-success="payment_state == 'paid'"
+                       decoration-warning="payment_state == 'partial'"
+                       decoration-danger="payment_state == 'unpaid'"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'done'"
+                       decoration-danger="state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_stock_receive" model="ir.actions.act_window">
+        <field name="name">استلام المخزون</field>
+        <field name="res_model">medical.stock.receive</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

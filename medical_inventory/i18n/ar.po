@@ -1,0 +1,553 @@
+# Translation of medical_inventory to Arabic
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2024-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Arabic\n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. module: medical_inventory
+msgid "Medical Inventory"
+msgstr "المخزون الطبي"
+
+#. module: medical_inventory
+msgid "Medical Center Inventory"
+msgstr "مخزون المركز الطبي"
+
+#. module: medical_inventory
+msgid "Dashboard"
+msgstr "لوحة التحكم"
+
+#. module: medical_inventory
+msgid "Current Stock"
+msgstr "المخزون الحالي"
+
+#. module: medical_inventory
+msgid "Products"
+msgstr "المنتجات"
+
+#. module: medical_inventory
+msgid "Receive Stock"
+msgstr "استلام المخزون"
+
+#. module: medical_inventory
+msgid "Transfer Requests"
+msgstr "طلبات النقل"
+
+#. module: medical_inventory
+msgid "Consumption Reports"
+msgstr "تقارير الاستهلاك"
+
+#. module: medical_inventory
+msgid "Analytics"
+msgstr "التحليلات"
+
+#. module: medical_inventory
+msgid "Configuration"
+msgstr "الإعدادات"
+
+#. module: medical_inventory
+msgid "Expiry Monitor"
+msgstr "مراقبة انتهاء الصلاحية"
+
+#. module: medical_inventory
+msgid "Purchase Analytics"
+msgstr "تحليلات المشتريات"
+
+#. module: medical_inventory
+msgid "Consumption Analytics"
+msgstr "تحليلات الاستهلاك"
+
+#. module: medical_inventory
+msgid "Generate Report (Excel/PDF)"
+msgstr "إنشاء تقرير (Excel/PDF)"
+
+#. module: medical_inventory
+msgid "Clinics & Departments"
+msgstr "العيادات والأقسام"
+
+#. module: medical_inventory
+msgid "Vendors"
+msgstr "الموردون"
+
+#. module: medical_inventory
+msgid "Stock Transfer Request"
+msgstr "طلب نقل المخزون"
+
+#. module: medical_inventory
+msgid "Consumption Report"
+msgstr "تقرير الاستهلاك"
+
+#. module: medical_inventory
+msgid "Stock Receipts"
+msgstr "استلامات المخزون"
+
+#. module: medical_inventory
+msgid "Receive Stock"
+msgstr "استلام المخزون"
+
+#. module: medical_inventory
+msgid "Submit Request"
+msgstr "تقديم الطلب"
+
+#. module: medical_inventory
+msgid "Submit Report"
+msgstr "تقديم التقرير"
+
+#. module: medical_inventory
+msgid "Approve"
+msgstr "موافقة"
+
+#. module: medical_inventory
+msgid "Reject"
+msgstr "رفض"
+
+#. module: medical_inventory
+msgid "Process & Transfer Stock"
+msgstr "معالجة ونقل المخزون"
+
+#. module: medical_inventory
+msgid "Confirm Consumption & Reduce Stock"
+msgstr "تأكيد الاستهلاك وتخفيض المخزون"
+
+#. module: medical_inventory
+msgid "Confirm & Add to Inventory"
+msgstr "تأكيد وإضافة إلى المخزون"
+
+#. module: medical_inventory
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: medical_inventory
+msgid "Reset to Draft"
+msgstr "إعادة إلى المسودة"
+
+#. module: medical_inventory
+msgid "Request Details"
+msgstr "تفاصيل الطلب"
+
+#. module: medical_inventory
+msgid "Deliver To (Clinic)"
+msgstr "التسليم إلى (العيادة)"
+
+#. module: medical_inventory
+msgid "Take From (Store/Warehouse)"
+msgstr "الأخذ من (المستودع/المخزن)"
+
+#. module: medical_inventory
+msgid "Take From (Warehouse/Store)"
+msgstr "الأخذ من (المستودع/المخزن)"
+
+#. module: medical_inventory
+msgid "Approval Info"
+msgstr "معلومات الموافقة"
+
+#. module: medical_inventory
+msgid "Items Requested"
+msgstr "العناصر المطلوبة"
+
+#. module: medical_inventory
+msgid "Items Consumed"
+msgstr "العناصر المستهلكة"
+
+#. module: medical_inventory
+msgid "Items Received"
+msgstr "العناصر المستلمة"
+
+#. module: medical_inventory
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: medical_inventory
+msgid "Receipt Details"
+msgstr "تفاصيل الاستلام"
+
+#. module: medical_inventory
+msgid "Vendor Information"
+msgstr "معلومات المورد"
+
+#. module: medical_inventory
+msgid "Grand Total"
+msgstr "المجموع الكلي"
+
+#. module: medical_inventory
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: medical_inventory
+msgid "Submitted"
+msgstr "مُقدَّم"
+
+#. module: medical_inventory
+msgid "Approved"
+msgstr "معتمد"
+
+#. module: medical_inventory
+msgid "Done"
+msgstr "منجز"
+
+#. module: medical_inventory
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: medical_inventory
+msgid "Cancelled"
+msgstr "ملغي"
+
+#. module: medical_inventory
+msgid "Received"
+msgstr "مستلم"
+
+#. module: medical_inventory
+msgid "Awaiting Approval"
+msgstr "في انتظار الموافقة"
+
+#. module: medical_inventory
+msgid "New"
+msgstr "جديد"
+
+#. module: medical_inventory
+msgid "Status"
+msgstr "الحالة"
+
+#. module: medical_inventory
+msgid "Product"
+msgstr "المنتج"
+
+#. module: medical_inventory
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: medical_inventory
+msgid "Unit"
+msgstr "الوحدة"
+
+#. module: medical_inventory
+msgid "Unit Price"
+msgstr "سعر الوحدة"
+
+#. module: medical_inventory
+msgid "Subtotal"
+msgstr "المجموع الجزئي"
+
+#. module: medical_inventory
+msgid "Total Value"
+msgstr "القيمة الإجمالية"
+
+#. module: medical_inventory
+msgid "Location"
+msgstr "الموقع"
+
+#. module: medical_inventory
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: medical_inventory
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: medical_inventory
+msgid "Vendor"
+msgstr "المورد"
+
+#. module: medical_inventory
+msgid "Vendor Name"
+msgstr "اسم المورد"
+
+#. module: medical_inventory
+msgid "Requested By"
+msgstr "طُلب بواسطة"
+
+#. module: medical_inventory
+msgid "Received By"
+msgstr "استلم بواسطة"
+
+#. module: medical_inventory
+msgid "Approved By"
+msgstr "معتمد من قبل"
+
+#. module: medical_inventory
+msgid "Approval Date"
+msgstr "تاريخ الموافقة"
+
+#. module: medical_inventory
+msgid "Request Date"
+msgstr "تاريخ الطلب"
+
+#. module: medical_inventory
+msgid "Clinic / Department"
+msgstr "العيادة / القسم"
+
+#. module: medical_inventory
+msgid "Clinic"
+msgstr "العيادة"
+
+#. module: medical_inventory
+msgid "Available in Store"
+msgstr "متاح في المستودع"
+
+#. module: medical_inventory
+msgid "Available in Clinic"
+msgstr "متاح في العيادة"
+
+#. module: medical_inventory
+msgid "Quantity on Hand"
+msgstr "الكمية المتوفرة"
+
+#. module: medical_inventory
+msgid "Products in Stock"
+msgstr "المنتجات في المخزون"
+
+#. module: medical_inventory
+msgid "Expiry Date"
+msgstr "تاريخ الانتهاء"
+
+#. module: medical_inventory
+msgid "Lot/Serial Number"
+msgstr "رقم الدفعة / التسلسلي"
+
+#. module: medical_inventory
+msgid "By Status"
+msgstr "حسب الحالة"
+
+#. module: medical_inventory
+msgid "By Clinic"
+msgstr "حسب العيادة"
+
+#. module: medical_inventory
+msgid "By Type"
+msgstr "حسب النوع"
+
+#. module: medical_inventory
+msgid "By Location"
+msgstr "حسب الموقع"
+
+#. module: medical_inventory
+msgid "By Product"
+msgstr "حسب المنتج"
+
+#. module: medical_inventory
+msgid "By Vendor"
+msgstr "حسب المورد"
+
+#. module: medical_inventory
+msgid "By Month"
+msgstr "حسب الشهر"
+
+#. module: medical_inventory
+msgid "By Category"
+msgstr "حسب الفئة"
+
+#. module: medical_inventory
+msgid "Search Stock"
+msgstr "بحث في المخزون"
+
+#. module: medical_inventory
+msgid "Search Products"
+msgstr "بحث في المنتجات"
+
+#. module: medical_inventory
+msgid "Search Purchases"
+msgstr "بحث في المشتريات"
+
+#. module: medical_inventory
+msgid "Search Consumption"
+msgstr "بحث في الاستهلاك"
+
+#. module: medical_inventory
+msgid "Transfer to Clinic"
+msgstr "نقل إلى العيادة"
+
+#. module: medical_inventory
+msgid "Consumption / Usage Report"
+msgstr "تقرير الاستهلاك / الاستخدام"
+
+#. module: medical_inventory
+msgid "Purchase Report"
+msgstr "تقرير المشتريات"
+
+#. module: medical_inventory
+msgid "Current Stock Report"
+msgstr "تقرير المخزون الحالي"
+
+#. module: medical_inventory
+msgid "Expiry Report"
+msgstr "تقرير انتهاء الصلاحية"
+
+#. module: medical_inventory
+msgid "Department"
+msgstr "قسم"
+
+#. module: medical_inventory
+msgid "Main Store / Warehouse"
+msgstr "المخزن الرئيسي / المستودع"
+
+#. module: medical_inventory
+msgid "Pharmacy"
+msgstr "صيدلية"
+
+#. module: medical_inventory
+msgid "Other"
+msgstr "أخرى"
+
+#. module: medical_inventory
+msgid "Consumption History"
+msgstr "سجل الاستهلاك"
+
+#. module: medical_inventory
+msgid "Purchase History"
+msgstr "سجل المشتريات"
+
+#. module: medical_inventory
+msgid "Total Spend"
+msgstr "إجمالي الإنفاق"
+
+#. module: medical_inventory
+msgid "Spend by Product"
+msgstr "الإنفاق حسب المنتج"
+
+#. module: medical_inventory
+msgid "Qty Consumed"
+msgstr "الكمية المستهلكة"
+
+#. module: medical_inventory
+msgid "Qty Purchased"
+msgstr "الكمية المشتراة"
+
+#. module: medical_inventory
+msgid "Units Consumed"
+msgstr "الوحدات المستهلكة"
+
+#. module: medical_inventory
+msgid "Avg Unit Price"
+msgstr "متوسط سعر الوحدة"
+
+#. module: medical_inventory
+msgid "This Month"
+msgstr "هذا الشهر"
+
+#. module: medical_inventory
+msgid "Last Month"
+msgstr "الشهر الماضي"
+
+#. module: medical_inventory
+msgid "Last 30 Days"
+msgstr "آخر 30 يوم"
+
+#. module: medical_inventory
+msgid "This Year"
+msgstr "هذا العام"
+
+#. module: medical_inventory
+msgid "Date From"
+msgstr "من تاريخ"
+
+#. module: medical_inventory
+msgid "Date To"
+msgstr "إلى تاريخ"
+
+#. module: medical_inventory
+msgid "Generate Report"
+msgstr "إنشاء التقرير"
+
+#. module: medical_inventory
+msgid "Download Report"
+msgstr "تحميل التقرير"
+
+#. module: medical_inventory
+msgid "Report Type"
+msgstr "نوع التقرير"
+
+#. module: medical_inventory
+msgid "Format"
+msgstr "الصيغة"
+
+#. module: medical_inventory
+msgid "File Name"
+msgstr "اسم الملف"
+
+#. module: medical_inventory
+msgid "Low Stock Alert Rule"
+msgstr "قاعدة تنبيه انخفاض المخزون"
+
+#. module: medical_inventory
+msgid "Low Stock Alert Rules"
+msgstr "قواعد تنبيه انخفاض المخزون"
+
+#. module: medical_inventory
+msgid "Minimum Quantity"
+msgstr "الحد الأدنى للكمية"
+
+#. module: medical_inventory
+msgid "Linked Stock Location"
+msgstr "موقع المخزون المرتبط"
+
+#. module: medical_inventory
+msgid "Clinic / Department Name"
+msgstr "اسم العيادة / القسم"
+
+#. module: medical_inventory
+msgid "Linked Location"
+msgstr "الموقع المرتبط"
+
+#. module: medical_inventory
+msgid "Cannot cancel a completed receipt."
+msgstr "لا يمكن إلغاء استلام مكتمل."
+
+#. module: medical_inventory
+msgid "Cannot cancel a completed request."
+msgstr "لا يمكن إلغاء طلب مكتمل."
+
+#. module: medical_inventory
+msgid "Consumption recorded."
+msgstr "تم تسجيل الاستهلاك."
+
+#. module: medical_inventory
+msgid "No supplier location found. Please configure your warehouse."
+msgstr "لم يتم العثور على موقع المورد. يرجى تكوين المستودع."
+
+#. module: medical_inventory
+msgid "Please add at least one item before submitting."
+msgstr "يرجى إضافة عنصر واحد على الأقل قبل التقديم."
+
+#. module: medical_inventory
+msgid "Please add at least one product."
+msgstr "يرجى إضافة منتج واحد على الأقل."
+
+#. module: medical_inventory
+msgid "Please select a destination location first."
+msgstr "يرجى تحديد موقع الوجهة أولاً."
+
+#. module: medical_inventory
+msgid "Request must be approved before processing."
+msgstr "يجب الموافقة على الطلب قبل المعالجة."
+
+#. module: medical_inventory
+msgid "Transfer complete."
+msgstr "اكتمل النقل."
+
+#. module: medical_inventory
+msgid "Stock received successfully into %s."
+msgstr "تم استلام المخزون بنجاح في %s."
+
+#. module: medical_inventory
+msgid "Not enough stock for %s in %s. Available: %.2f"
+msgstr "لا يوجد مخزون كافٍ لـ %s في %s. المتاح: %.2f"
+
+#. module: medical_inventory
+msgid "Stock in %s"
+msgstr "المخزون في %s"
+
+#. module: medical_inventory
+msgid "Approved. Note: %s"
+msgstr "تمت الموافقة. ملاحظة: %s"
+
+#. module: medical_inventory
+msgid "Rejected. Reason: %s"
+msgstr "تم الرفض. السبب: %s"

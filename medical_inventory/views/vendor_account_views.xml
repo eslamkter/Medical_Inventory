@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ===== حساب المورد ===== -->
+    <record id="view_vendor_account_form" model="ir.ui.view">
+        <field name="name">medical.vendor.account.form</field>
+        <field name="model">medical.vendor.account</field>
+        <field name="arch" type="xml">
+            <form string="حساب المورد">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_receives" type="object"
+                                class="oe_stat_button" icon="fa-truck">
+                            <field name="receive_count" widget="statinfo" string="استلامات"/>
+                        </button>
+                        <button name="action_view_payments" type="object"
+                                class="oe_stat_button" icon="fa-money">
+                            <field name="payment_count" widget="statinfo" string="دفعات"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="vendor_id"/></h1>
+                    </div>
+
+                    <!-- ملخص مالي -->
+                    <div class="o_vendor_summary" style="display:flex;gap:16px;margin:16px 0;flex-wrap:wrap;">
+                        <div style="flex:1;min-width:150px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:16px;text-align:center;">
+                            <div style="font-size:22px;font-weight:bold;color:#0369a1;">
+                                $<field name="total_purchases" nolabel="1" widget="float" options="{'digits': [10,2]}"/>
+                            </div>
+                            <div style="color:#64748b;font-size:13px;">إجمالي المشتريات</div>
+                        </div>
+                        <div style="flex:1;min-width:150px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px;text-align:center;">
+                            <div style="font-size:22px;font-weight:bold;color:#15803d;">
+                                $<field name="total_paid" nolabel="1" widget="float" options="{'digits': [10,2]}"/>
+                            </div>
+                            <div style="color:#64748b;font-size:13px;">إجمالي المدفوع</div>
+                        </div>
+                        <div style="flex:1;min-width:150px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:16px;text-align:center;">
+                            <div style="font-size:22px;font-weight:bold;color:#c2410c;">
+                                $<field name="balance_due" nolabel="1" widget="float" options="{'digits': [10,2]}"/>
+                            </div>
+                            <div style="color:#64748b;font-size:13px;">الرصيد المستحق</div>
+                        </div>
+                    </div>
+
+                    <div class="o_vendor_actions" style="margin-bottom:16px;">
+                        <button name="action_register_payment" type="object"
+                                class="btn btn-success"
+                                invisible="balance_due &lt;= 0">
+                            💰 تسجيل دفعة جديدة
+                        </button>
+                    </div>
+
+                    <notebook>
+                        <page string="حركات الحساب">
+                            <field name="line_ids" readonly="1">
+                                <list decoration-success="line_type == 'payment'"
+                                      decoration-info="line_type == 'purchase'">
+                                    <field name="date" string="التاريخ"/>
+                                    <field name="line_type" string="النوع" widget="badge"
+                                           decoration-success="line_type == 'payment'"
+                                           decoration-info="line_type == 'purchase'"/>
+                                    <field name="reference" string="المرجع"/>
+                                    <field name="notes" string="ملاحظات"/>
+                                    <field name="amount" string="المبلغ"/>
+                                    <field name="balance_after" string="الرصيد بعد"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="الدفعات">
+                            <field name="payment_ids">
+                                <list decoration-success="state == 'confirmed'"
+                                      decoration-muted="state == 'draft'">
+                                    <field name="name" string="رقم الدفعة"/>
+                                    <field name="date" string="التاريخ"/>
+                                    <field name="amount" string="المبلغ" sum="الإجمالي"/>
+                                    <field name="payment_method" string="طريقة الدفع"/>
+                                    <field name="reference" string="المرجع"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'confirmed'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="ملاحظات">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_vendor_account_list" model="ir.ui.view">
+        <field name="name">medical.vendor.account.list</field>
+        <field name="model">medical.vendor.account</field>
+        <field name="arch" type="xml">
+            <list string="حسابات الموردين"
+                  decoration-danger="balance_due &gt; 0"
+                  decoration-success="balance_due &lt;= 0">
+                <field name="vendor_id" string="المورد"/>
+                <field name="total_purchases" string="إجمالي المشتريات" sum="الإجمالي"/>
+                <field name="total_paid" string="إجمالي المدفوع" sum="الإجمالي"/>
+                <field name="balance_due" string="الرصيد المستحق" sum="إجمالي المستحق"/>
+                <field name="receive_count" string="عدد الاستلامات"/>
+                <field name="payment_count" string="عدد الدفعات"/>
+                <button name="action_register_payment" type="object"
+                        string="دفعة" icon="fa-money" class="btn-success"
+                        invisible="balance_due &lt;= 0"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_vendor_account_search" model="ir.ui.view">
+        <field name="name">medical.vendor.account.search</field>
+        <field name="model">medical.vendor.account</field>
+        <field name="arch" type="xml">
+            <search string="بحث في حسابات الموردين">
+                <field name="vendor_id" string="المورد"/>
+                <filter string="عليهم رصيد" name="has_balance"
+                        domain="[('balance_due', '&gt;', 0)]"/>
+                <filter string="مسددون" name="paid"
+                        domain="[('balance_due', '&lt;=', 0)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_vendor_accounts" model="ir.actions.act_window">
+        <field name="name">حسابات الموردين</field>
+        <field name="res_model">medical.vendor.account</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_vendor_account_search"/>
+    </record>
+
+    <!-- ===== نموذج الدفعة ===== -->
+    <record id="view_vendor_payment_form" model="ir.ui.view">
+        <field name="name">medical.vendor.payment.form</field>
+        <field name="model">medical.vendor.payment</field>
+        <field name="arch" type="xml">
+            <form string="دفعة للمورد">
+                <header>
+                    <button name="action_confirm" string="تأكيد الدفعة"
+                            type="object" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_reset_draft" string="إعادة إلى مسودة"
+                            type="object"
+                            invisible="state != 'confirmed'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="تفاصيل الدفعة">
+                            <field name="vendor_account_id" string="حساب المورد"
+                                   readonly="state != 'draft'"/>
+                            <field name="vendor_id" readonly="1" string="المورد"/>
+                            <field name="date" readonly="state != 'draft'" string="تاريخ الدفع"/>
+                            <field name="amount" readonly="state != 'draft'" string="المبلغ المدفوع"/>
+                        </group>
+                        <group string="معلومات الدفع">
+                            <field name="payment_method" readonly="state != 'draft'" string="طريقة الدفع"/>
+                            <field name="reference" readonly="state != 'draft'" string="المرجع / رقم الشيك"/>
+                            <field name="receive_id" readonly="state != 'draft'" string="مقابل فاتورة"/>
+                        </group>
+                    </group>
+                    <group string="ملاحظات">
+                        <field name="notes" nolabel="1" readonly="state != 'draft'"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_vendor_payment_list" model="ir.ui.view">
+        <field name="name">medical.vendor.payment.list</field>
+        <field name="model">medical.vendor.payment</field>
+        <field name="arch" type="xml">
+            <list string="دفعات الموردين"
+                  decoration-success="state == 'confirmed'"
+                  decoration-muted="state == 'draft'">
+                <field name="name" string="رقم الدفعة"/>
+                <field name="vendor_id" string="المورد"/>
+                <field name="date" string="التاريخ"/>
+                <field name="amount" string="المبلغ" sum="إجمالي الدفعات"/>
+                <field name="payment_method" string="طريقة الدفع"/>
+                <field name="reference" string="المرجع"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'confirmed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_vendor_payments" model="ir.actions.act_window">
+        <field name="name">دفعات الموردين</field>
+        <field name="res_model">medical.vendor.payment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

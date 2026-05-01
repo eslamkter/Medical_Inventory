@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_transfer_request_form" model="ir.ui.view">
+        <field name="name">medical.transfer.request.form</field>
+        <field name="model">medical.consumption.request</field>
+        <field name="arch" type="xml">
+            <form string="طلب نقل المخزون">
+                <header>
+                    <button name="action_print_transfer" string="طباعة إذن الصرف"
+                            type="object" class="btn-info" icon="fa-print"
+                            invisible="state not in ['approved', 'done']"/>
+                    <button name="action_submit" string="تقديم الطلب"
+                            type="object" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_approve" string="موافقة"
+                            type="object" class="btn-success"
+                            groups="base.group_system"
+                            invisible="state != 'submitted'"/>
+                    <button name="action_reject" string="رفض"
+                            type="object" groups="base.group_system"
+                            invisible="state != 'submitted'"/>
+                    <button name="action_process_stock"
+                            string="معالجة ونقل المخزون"
+                            type="object" class="btn-primary"
+                            groups="base.group_system"
+                            invisible="state != 'approved'"/>
+                    <button name="action_cancel" string="إلغاء" type="object"
+                            invisible="state in ['done','cancelled']"/>
+                    <button name="action_reset_draft" string="إعادة إلى المسودة"
+                            type="object"
+                            invisible="state not in ['cancelled','rejected']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,submitted,approved,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="تفاصيل النقل">
+                            <field name="request_type" invisible="1"/>
+                            <field name="available_product_ids" invisible="1"/>
+                            <field name="date_request" readonly="state != 'draft'" string="تاريخ الطلب"/>
+                            <field name="requested_by" readonly="state != 'draft'" string="طُلب بواسطة"/>
+                            <field name="source_location_id"
+                                   string="من المستودع (المصدر)"
+                                   required="1"
+                                   readonly="state != 'draft'"/>
+                            <field name="department_location_id"
+                                   string="إلى العيادة (المستلم)"
+                                   required="1"
+                                   readonly="state != 'draft'"/>
+                        </group>
+                        <group string="معلومات الاعتماد">
+                            <field name="approved_by" readonly="1" string="معتمد من قبل"/>
+                            <field name="date_approved" readonly="1" string="تاريخ الموافقة"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="الأصناف المراد نقلها">
+                            <field name="line_ids" readonly="state not in ['draft']">
+                                <list editable="bottom">
+                                    <field name="product_id" string="الصنف"/>
+                                    <field name="available_qty" string="المتاح بالمستودع" readonly="1" force_save="1"/>
+                                    <field name="quantity" string="الكمية المطلوبة"/>
+                                    <field name="product_uom_id" string="الوحدة"/>
+                                    <field name="notes" optional="show" string="ملاحظات"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="ملاحظات إضافية">
+                            <field name="notes" readonly="state != 'draft'"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_consumption_request_form" model="ir.ui.view">
+        <field name="name">medical.consumption.request.form</field>
+        <field name="model">medical.consumption.request</field>
+        <field name="arch" type="xml">
+            <form string="تقرير الاستهلاك">
+                <header>
+                    <button name="action_print_transfer" string="طباعة تقرير الاستهلاك"
+                            type="object" class="btn-info" icon="fa-print"
+                            invisible="state not in ['approved', 'done']"/>
+                    <button name="action_submit" string="تقديم التقرير"
+                            type="object" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_approve" string="اعتماد الاستهلاك"
+                            type="object" class="btn-success"
+                            groups="base.group_system"
+                            invisible="state != 'submitted'"/>
+                    <button name="action_process_stock"
+                            string="تأكيد الخصم من مخزن العيادة"
+                            type="object" class="btn-primary"
+                            groups="base.group_system"
+                            invisible="state != 'approved'"/>
+                    <button name="action_cancel" string="إلغاء" type="object"
+                            invisible="state in ['done','cancelled']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,submitted,approved,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="بيانات الاستهلاك">
+                            <field name="request_type" invisible="1"/>
+                            <field name="available_product_ids" invisible="1"/>
+                            <field name="date_request" readonly="state != 'draft'" string="تاريخ الاستهلاك"/>
+                            <field name="requested_by" readonly="state != 'draft'" string="الموظف المسؤول"/>
+                            <field name="department_location_id"
+                                   string="العيادة / القسم المستهلك"
+                                   required="1"
+                                   readonly="state != 'draft'"/>
+                            <field name="source_location_id" invisible="1"/>
+                        </group>
+                        <group string="المراجعة">
+                            <field name="approved_by" readonly="1" string="راجع بواسطة"/>
+                            <field name="date_approved" readonly="1" string="تاريخ المراجعة"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="الأصناف المستهلكة">
+                            <field name="line_ids" readonly="state not in ['draft']">
+                                <list editable="bottom">
+                                    <field name="product_id"
+                                           string="الصنف"
+                                           domain="[('id', 'in', parent.available_product_ids)]"
+                                           options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="available_qty" string="المتاح بالعيادة" readonly="1" force_save="1"/>
+                                    <field name="quantity" string="الكمية المستهلكة"/>
+                                    <field name="product_uom_id" string="الوحدة"/>
+                                    <field name="notes" string="سبب الاستهلاك"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_transfer_request_list" model="ir.ui.view">
+        <field name="name">medical.transfer.request.list</field>
+        <field name="model">medical.consumption.request</field>
+        <field name="arch" type="xml">
+            <list string="طلبات النقل">
+                <field name="name" string="المرجع"/>
+                <field name="date_request" string="التاريخ"/>
+                <field name="source_location_id" string="من مستودع"/>
+                <field name="department_location_id" string="إلى عيادة"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'" decoration-info="state == 'approved'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_consumption_request_list" model="ir.ui.view">
+        <field name="name">medical.consumption.request.list</field>
+        <field name="model">medical.consumption.request</field>
+        <field name="arch" type="xml">
+            <list string="تقارير الاستهلاك">
+                <field name="name" string="المرجع"/>
+                <field name="date_request" string="تاريخ الاستهلاك"/>
+                <field name="department_location_id" string="العيادة المستهلكة"/>
+                <field name="requested_by" string="المسؤول"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_transfer_request" model="ir.actions.act_window">
+        <field name="name">طلبات النقل</field>
+        <field name="res_model">medical.consumption.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('request_type','=','transfer')]</field>
+        <field name="context">{'default_request_type': 'transfer'}</field>
+        <field name="view_id" ref="view_transfer_request_list"/>
+    </record>
+
+    <record id="action_consumption_request" model="ir.actions.act_window">
+        <field name="name">تقارير الاستهلاك</field>
+        <field name="res_model">medical.consumption.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('request_type','=','consumption')]</field>
+        <field name="context">{'default_request_type': 'consumption'}</field>
+        <field name="view_id" ref="view_consumption_request_list"/>
+    </record>
+
+</odoo>
